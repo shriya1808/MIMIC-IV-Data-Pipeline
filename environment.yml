@@ -1,0 +1,10 @@
+name: mimic-pipeline
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - requests
+  - pip
