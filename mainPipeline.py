@@ -3,6 +3,7 @@
 from pathlib import Path
 import os
 import numpy as np
+import argparse
 #import nltk
 
 import sys
@@ -26,7 +27,18 @@ module_path = 'model'
 if module_path not in sys.path:
     sys.path.append(module_path)
 #print(sys.path)
-root_dir = os.path.dirname(os.path.abspath('UserInterface.ipynb'))
+
+parser = argparse.ArgumentParser(description="MIMIC-IV Data Pipeline")
+parser.add_argument(
+    "--workdir",
+    type=str,
+    required=True,
+    help="Working directory for the pipeline"
+)
+args = parser.parse_args()
+
+root_dir = os.path.dirname(args.workdir)
+print(os.getcwd())
 
 import day_intervals_cohort
 from day_intervals_cohort import *

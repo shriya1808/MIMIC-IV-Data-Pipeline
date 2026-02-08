@@ -7,6 +7,14 @@
 unset SLURM_EXPORT_ENV
 
 module add python
-conda activate YOUR_ENVIRONMENT
+conda env create -f environment.yml -y
+conda config --set channel_priority strict
+conda activate mimic-pipeline
+conda install -c conda-forge tqdm scikit-learn imbalanced-learn nltk -y
+conda install -c conda-forge ipywidgets pytorch -y
+pip install import-ipynb captum PyRuSH medspacy
+pip install Jinja2==2.11.2
+conda install ipykernel -y
 
-python3 mainPipeline.py --workdir "$WORK"
+
+python3 mainPipeline.py --workdir "$WORK/MIMIC-IV-Data-Pipeline/"
