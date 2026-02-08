@@ -6,7 +6,12 @@
 
 unset SLURM_EXPORT_ENV
 
+if [ ! -f ~/.bash_profile ]; then
+  echo "if [ -f ~/.bashrc ]; then . ~/.bashrc; fi" > ~/.bash_profile
+fi
 module add python
+conda config --add pkgs_dirs $WORK/software/private/conda/pkgs
+conda config --add envs_dirs $WORK/software/private/conda/envs
 conda env create -f environment.yml -y
 conda config --set channel_priority strict
 conda activate mimic-pipeline
