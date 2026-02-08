@@ -6,6 +6,10 @@
 
 unset SLURM_EXPORT_ENV
 
+source ~/.bashrc
+export http_proxy=http://proxy.nhr.fau.de:80
+export https_proxy=http://proxy.nhr.fau.de:80
+
 if [ ! -f ~/.bash_profile ]; then
   echo "if [ -f ~/.bashrc ]; then . ~/.bashrc; fi" > ~/.bash_profile
 fi
