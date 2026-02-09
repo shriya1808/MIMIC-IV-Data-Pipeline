@@ -253,8 +253,8 @@ elif version=='Version 2':
     cohort_output = day_intervals_cohort_v2.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
 elif version=='Version 3':
     version_path="mimicv/3.1"
-    # cohort_output = "cohort_non-icu_readmission_30_"
-    cohort_output = day_intervals_cohort_v3.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
+    cohort_output = "cohort_non-icu_readmission_30_"
+    # cohort_output = day_intervals_cohort_v3.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
 elif version=='Notes':
     version_path='mimiciv/notes'
     nlp_output = notes_preproc.extract_data(notes_sec, notes_pred)
@@ -315,7 +315,7 @@ else:
     check_input1 = True
     check_input2 = False
     check_input3 = True
-    check_input4 = True
+    check_input4 = False
     # check_input1 = widgets.Checkbox(description='Diagnosis', value=True)
     print(check_input1)
     # check_input2 = widgets.Checkbox(description='Labs', value=False)
@@ -440,48 +440,48 @@ else:
 #############Feature Selection #################
 if data_icu:
     if diag_flag:
-        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./data/summary/diag_features.csv)")
+        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./data2/summary/diag_features.csv)")
         # radio_input4 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input4 = 'No'
         print(radio_input4)       
     if med_flag:
-        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./data/summary/med_features.csv)")
+        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./data2/summary/med_features.csv)")
         # radio_input5 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input5 = 'No'
         print(radio_input5)   
     if proc_flag:
-        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./data/summary/proc_features.csv)")
+        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./data2/summary/proc_features.csv)")
         # radio_input6 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input6 = 'No'
         print(radio_input6)   
     if out_flag:
-        print("Do you want to do Feature Selection for Output event \n (If yes, please edit list of codes in ./data/summary/out_features.csv)")
+        print("Do you want to do Feature Selection for Output event \n (If yes, please edit list of codes in ./data2/summary/out_features.csv)")
         # radio_input7 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input7 = 'No'
         print(radio_input7)  
     if chart_flag:
-        print("Do you want to do Feature Selection for Chart events \n (If yes, please edit list of codes in ./data/summary/chart_features.csv)")
+        print("Do you want to do Feature Selection for Chart events \n (If yes, please edit list of codes in ./data2/summary/chart_features.csv)")
         # radio_input8 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input8 = 'No'
         print(radio_input8)  
 else:
     if diag_flag:
-        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./data/summary/diag_features.csv)")
+        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./data2/summary/diag_features.csv)")
         # radio_input4 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input4
         print(radio_input4)         
     if med_flag:
-        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./data/summary/med_features.csv)")
+        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./data2/summary/med_features.csv)")
         # radio_input5 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input5 = 'No'
         print(radio_input5)   
     if proc_flag:
-        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./data/summary/proc_features.csv)")
+        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./data2/summary/proc_features.csv)")
         # radio_input6 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input6 = 'No'
         print(radio_input6)   
     if lab_flag:
-        print("Do you want to do Feature Selection for Labs \n (If yes, please edit list of codes in ./data/summary/lab_features.csv)")
+        print("Do you want to do Feature Selection for Labs \n (If yes, please edit list of codes in ./data2/summary/lab_features.csv)")
         # radio_input7 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input7 = 'No'
         print(radio_input7)   
@@ -604,7 +604,7 @@ elif(data_los):
     
     
 print("What time bucket size you want to choose ?")
-radio_input7 = '2 hour' # widgets.RadioButtons(options=['1 hour','2 hour','3 hour','4 hour','5 hour','Custom'],value='2 hour')
+radio_input7 = '4 hour' # widgets.RadioButtons(options=['1 hour','2 hour','3 hour','4 hour','5 hour','Custom'],value='2 hour')
 print(radio_input7)
 text1=1
 #print(text1)
@@ -614,11 +614,11 @@ radio_impute = 'forward fill and median'
 print(radio_impute)   
 
 # radio_input6 = widgets.RadioButtons(options=['0 hours','2 hours','4 hours','6 hours'],value='2 hours')
-radio_input6 = '2 hours'
+radio_input6 = '4 hours'
 if(data_mort):
     print("If you have choosen mortality prediction task, then what prediction window length you want to keep?")
     # radio_input6 = widgets.RadioButtons(options=['2 hours','4 hours','6 hours','8 hours','Custom'],value='2 hours')
-    radio_input6 = '2 hours'
+    radio_input6 = '4 hours'
     print(radio_input6)
     text3=2
 print("**Please run below cell to perform time-series represenation and save in data dictionaries**")

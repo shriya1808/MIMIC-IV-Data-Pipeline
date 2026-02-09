@@ -4,5 +4,6 @@ scrap
 *.csv.gz
 *summary*.txt
 mimiciv/
-data/
+data*/
+data2/
 .ipynb_checkpoints

@@ -28,7 +28,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + './../..')
 
 def callibrate(inputFile, outputFile):
     
-    output_dict = pickle.load(open('./data/output/'+inputFile,"rb"))
+    output_dict = pickle.load(open('./data2/output/'+inputFile,"rb"))
    
 
     if torch.cuda.is_available():
@@ -80,5 +80,5 @@ def callibrate(inputFile, outputFile):
     output_dict['Logits']=pred.data.cpu().numpy()
     
     
-    output_dict.to_csv('./data/output/'+outputFile+'.csv',index=False)
+    output_dict.to_csv('./data2/output/'+outputFile+'.csv',index=False)
 
