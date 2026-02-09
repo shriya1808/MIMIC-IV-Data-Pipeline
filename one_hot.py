@@ -40,16 +40,17 @@ df = pd.get_dummies(df, columns=['gender', 'ethnicity'], prefix=['gender', 'eth'
 bool_cols = df.select_dtypes(include="bool").columns
 df[bool_cols] = df[bool_cols].astype(int)
 
+
 # -----------------------------
 # 4️⃣ Multi-hot encode list columns
 # -----------------------------
 print("Multi-hot encoding list columns...")
 for col in list_cols:
-    mlb = MultiLabelBinarizer()
+    mlb = MultiLabelBinarizer(sparse_output=True)
     
     encoded = mlb.fit_transform(df[col])
     
-    encoded_df = pd.DataFrame(
+    encoded_df = pd.DataFrame.sparse.from_spmatrix(
         encoded,
         columns=[f"{col}_{cls}" for cls in mlb.classes_],
         index=df.index
@@ -64,7 +65,8 @@ for col in list_cols:
 print(df.shape)
 print(df.head())
 
-df.to_csv(os.path.join(root_dir, "encoded_data_hosp_noLab.csv.gz"), index=False, compression="gzip")
+# df.to_csv(os.path.join(root_dir, "encoded_data_hosp_noLab.csv.gz"), index=False, compression="gzip")
 
-df.to_csv(os.path.join(root_dir, "encoded_data_hosp_noLab.csv"), index=False)
+# df.to_csv(os.path.join(root_dir, "encoded_data_hosp_noLab.csv"), index=False)
+df.to_parquet("encoded_data_hosp.parquet", index=False)
 
