@@ -3,6 +3,7 @@
 #SBATCH --ntasks=1
 #SBATCH --time=24:00:00
 #SBATCH --export=NONE
+# #SBATCH --mem=64G
 
 #SBATCH --mail-user=shriya.mittapalli@fau.de
 #SBATCH --mail-type=ALL
@@ -47,4 +48,5 @@ else
     conda activate $ENV_NAME
 fi
 
-python3 mainPipeline.py --workdir "$WORK/MIMIC-IV-Data-Pipeline/"
+# python3 mainPipeline.py --workdir "$WORK/MIMIC-IV-Data-Pipeline/"
+python3 one_hot.py --workdir "$WORK/MIMIC-IV-Data-Pipeline/"
