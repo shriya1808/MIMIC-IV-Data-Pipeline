@@ -80,6 +80,7 @@ def impute_missing_hadm_ids(
         existing_data["admittime"] = new_admittime
         existing_data["dischtime"] = new_dischtime
         list_rows_lab.append(existing_data)
+        
     tab_name = str(uuid1())
     pd.DataFrame(list_rows_lab).to_csv(f"{tab_name}.csv")
 
