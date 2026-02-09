@@ -131,6 +131,8 @@ import callibrate_output
 importlib.reload(evaluation)
 import evaluation
 
+import final_gen_non_icu
+from final_gen_non_icu import generate_patient_features_csv
 print("Finished importing.")
 
 
@@ -315,7 +317,7 @@ else:
     check_input1 = True
     check_input2 = False
     check_input3 = True
-    check_input4 = False
+    check_input4 = True
     # check_input1 = widgets.Checkbox(description='Diagnosis', value=True)
     print(check_input1)
     # check_input2 = widgets.Checkbox(description='Labs', value=False)
@@ -575,13 +577,14 @@ else:
 
 
 
+generate_patient_features_csv(cohort_output)
 
 
 
 
 
 
-
+'''
 ###############Time-Series Generation ##############
 print("=======Time-series Data Represenation=======")
 
@@ -653,5 +656,4 @@ if data_icu:
     #    gen=data_generation_icu.Generator(cohort_output,data_mort,False,False,False,chart_flag,False,impute,include,bucket,predW)
 else:
     gen=data_generation.Generator(cohort_output,data_mort,data_admn,data_los,diag_flag,lab_flag,proc_flag,med_flag,impute,include,bucket,predW)
-
-
+'''
