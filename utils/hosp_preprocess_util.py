@@ -275,7 +275,7 @@ def ndc_meds(med, mapping:str) -> pd.DataFrame:
 def preproc_labs(dataset_path: str, version_path:str, cohort_path:str, time_col:str, anchor_col:str, dtypes: dict, usecols: list) -> pd.DataFrame:
     """Function for getting hosp observations pertaining to a pickled cohort. Function is structured to save memory when reading and transforming data."""
     
-    usecols = ['itemid','subject_id','hadm_id','charttime','valuenum','valueuom']
+    usecols = ['itemid','subject_id','hadm_id','charttime','valuenum','valueuom', 'flag']
     dtypes = {
         'itemid':'int64',
         'subject_id':'int64',
@@ -302,6 +302,13 @@ def preproc_labs(dataset_path: str, version_path:str, cohort_path:str, time_col:
         #print(chunk.shape)
         #chunk.dropna(subset=['hadm_id'],inplace=True,axis=1)
         chunk=chunk.dropna(subset=['valuenum'])
+
+        # Keep only abnormal labs
+        chunk = chunk[chunk['flag'].str.lower() == 'abnormal']
+
+        # Drop flag column so output structure stays same
+        chunk = chunk.drop(columns=['flag'])
+
         chunk['valueuom']=chunk['valueuom'].fillna(0)
         
         chunk=chunk[chunk['subject_id'].isin(cohort['subject_id'].unique())]

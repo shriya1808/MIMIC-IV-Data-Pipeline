@@ -315,7 +315,7 @@ elif version == "Notes":
 else:
     print("Which Features you want to include for cohort?")
     check_input1 = True
-    check_input2 = False
+    check_input2 = True
     check_input3 = True
     check_input4 = True
     # check_input1 = widgets.Checkbox(description='Diagnosis', value=True)
