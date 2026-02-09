@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #
 #SBATCH --ntasks=1
-#SBATCH --time=1:00:00
+#SBATCH --time=24:00:00
 #SBATCH --export=NONE
 
 #SBATCH --mail-user=shriya.mittapalli@fau.de
@@ -36,6 +36,7 @@ if [ ! -d "$ENV_DIR" ]; then
     echo "Conda env not found. Creating $ENV_NAME ..."
     conda env create -f environment.yml -n $ENV_NAME
     conda activate $ENV_NAME
+    conda update -n base -c conda-forge conda -y
     conda install -c conda-forge tqdm scikit-learn imbalanced-learn nltk -y
     conda install -c conda-forge ipywidgets pytorch -y
     pip install import-ipynb captum PyRuSH medspacy

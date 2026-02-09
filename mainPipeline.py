@@ -174,11 +174,11 @@ elif radio_input4 =='Readmission':
     radio_input2 = '30 Day Readmission'
     print(radio_input2)
 
-elif radio_input4.value=='Phenotype':
+elif radio_input4=='Phenotype':
     # radio_input2 = widgets.RadioButtons(options=['Heart Failure in 30 days','CAD in 30 days','CKD in 30 days','COPD in 30 days'],value='Heart Failure in 30 days')
     radio_input2 = 'Heart Failure in 30 days'
     print(radio_input2)
-elif radio_input4.value=='Mortality':
+elif radio_input4=='Mortality':
     # radio_input2 = widgets.RadioButtons(options=['Mortality'],value='Mortality')
     radio_input2 = 'Mortality'
     #print(radio_input2)
@@ -337,7 +337,7 @@ if data_icu:
     proc_flag=check_input4
     med_flag=check_input5
     feature_icu(cohort_output, version_path,diag_flag,out_flag,chart_flag,proc_flag,med_flag)
-elif version.value == "Notes":
+elif version == "Notes":
     diag_flag = check_input1
     med_hist = check_input2
     f_med_hist = check_input3
