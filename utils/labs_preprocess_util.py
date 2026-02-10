@@ -7,8 +7,8 @@ from collections import defaultdict
 from typing import Union, List, Tuple
 import pandas as pd
 import numpy as np
-if not os.path.exists("./dataCKD/temp"):
-    os.makedirs("./dataCKD/temp")
+if not os.path.exists("./dataCAD/temp"):
+    os.makedirs("./dataCAD/temp")
 
 def hadm_imputer(
     charttime: pd._libs.tslibs.timestamps.Timestamp,
