@@ -16,8 +16,8 @@ from behrt_model import *
 
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + './../..')
-if not os.path.exists("./dataCAD/behrt"):
-    os.makedirs("./dataCAD/behrt")
+if not os.path.exists("./dataCOPD/behrt"):
+    os.makedirs("./dataCOPD/behrt")
 if not os.path.exists("./saved_models/checkpoint"):
     os.makedirs("./saved_models/checkpoint")
 importlib.reload(behrt_model)
@@ -139,8 +139,8 @@ class train_behrt():
         testload = torch.utils.data.DataLoader(dataset=TestDset, batch_size=train_params['batch_size'], shuffle=True)
         loss, cost, pred, label = eval(testload, True, train_params['device'])
 
-        labels = pd.read_csv("./dataCAD/behrt/behrt_labels.csv", header=None)
-        preds = pd.read_csv("./dataCAD/behrt/behrt_preds.csv", header=None)
+        labels = pd.read_csv("./dataCOPD/behrt/behrt_labels.csv", header=None)
+        preds = pd.read_csv("./dataCOPD/behrt/behrt_preds.csv", header=None)
 
         labels=labels.drop(0, axis=1)
         preds=preds.drop(0, axis=1)
@@ -227,9 +227,9 @@ class train_behrt():
             start = time.time()
             behrt.eval()
             if saving:
-                with open("./dataCAD/behrt/behrt_preds.csv", 'w') as f:
+                with open("./dataCOPD/behrt/behrt_preds.csv", 'w') as f:
                     f.write('')
-                with open("./dataCAD/behrt/behrt_labels.csv", 'w') as f:
+                with open("./dataCOPD/behrt/behrt_labels.csv", 'w') as f:
                     f.write('')
 
             for step, batch in enumerate(_valload):
@@ -253,9 +253,9 @@ class train_behrt():
                 loss = loss_fct(logits, labels)
 
                 if saving:
-                    with open("./dataCAD/behrt/behrt_preds.csv", 'a') as f:
+                    with open("./dataCOPD/behrt/behrt_preds.csv", 'a') as f:
                         pd.DataFrame(logits.detach().cpu().numpy()).to_csv(f, header=False)
-                    with open("./dataCAD/behrt/behrt_labels.csv", 'a') as f:
+                    with open("./dataCOPD/behrt/behrt_labels.csv", 'a') as f:
                         pd.DataFrame(labels.detach().cpu().numpy()).to_csv(f, header=False)
 
                 tr_loss += loss.item()

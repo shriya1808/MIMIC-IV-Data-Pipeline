@@ -7,20 +7,20 @@ def generate_patient_features_csv(cohort_output_name, root_dir="."):
     Generates a CSV file with patient features (demographics + aggregated clinical codes)
     
     Args:
-        cohort_output_name (str): The name of your cohort file inside ./dataCAD/cohort/ 
+        cohort_output_name (str): The name of your cohort file inside ./dataCOPD/cohort/ 
                                   (without .csv.gz extension). 
                                   Example: "cohort_non-icu_readmission_30_no_disease_filter"
     """
     
     # Define Paths
-    cohort_path = f"{root_dir}/dataCAD/cohort/{cohort_output_name}.csv.gz"
-    # cohort_path = f"./dataCAD/cohort/{cohort_output_name}.csv"
-    diag_path = f"{root_dir}/dataCAD/features/preproc_diag.csv.gz"
-    proc_path = f"{root_dir}/dataCAD/features/preproc_proc.csv.gz"
-    med_path = f"{root_dir}/dataCAD/features/preproc_med.csv.gz"
-    lab_path = f"{root_dir}/dataCAD/features/preproc_labs.csv.gz"
+    cohort_path = f"{root_dir}/dataCOPD/cohort/{cohort_output_name}.csv.gz"
+    # cohort_path = f"./dataCOPD/cohort/{cohort_output_name}.csv"
+    diag_path = f"{root_dir}/dataCOPD/features/preproc_diag.csv.gz"
+    proc_path = f"{root_dir}/dataCOPD/features/preproc_proc.csv.gz"
+    med_path = f"{root_dir}/dataCOPD/features/preproc_med.csv.gz"
+    lab_path = f"{root_dir}/dataCOPD/features/preproc_labs.csv.gz"
     
-    output_filename = f"{root_dir}/patient_features_CAD.csv"
+    output_filename = f"{root_dir}/patient_features_COPD.csv"
 
     # 1. Read Cohort Data (Base)
     print(f"[ READING COHORT ] {cohort_path}")
@@ -130,7 +130,7 @@ def generate_patient_features_csv(cohort_output_name, root_dir="."):
 # EXECUTION
 # ==========================================
 if __name__ == "__main__":
-    # REPLACE THIS with the actual name of your cohort file found in ./dataCAD/cohort/
+    # REPLACE THIS with the actual name of your cohort file found in ./dataCOPD/cohort/
     # Do not include the .csv.gz extension.
     # Example: "cohort_non-icu_readmission_30_no_disease_filter"
     pwd = os.getcwd()
