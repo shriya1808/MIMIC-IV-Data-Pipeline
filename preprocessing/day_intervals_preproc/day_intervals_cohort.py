@@ -349,7 +349,7 @@ def extract_data(use_ICU:str, label:str, time:int, icd_code:str, root_dir, disea
         summary_output=summary_output+"_"+icd_code
     #print(cohort[cols].head())
     # save output
-    cohort[cols].to_csv(root_dir+"/data/cohort/"+cohort_output+".csv.gz", index=False, compression='gzip')
+    cohort[cols].to_csv(root_dir+"/dataCOPD/cohort/"+cohort_output+".csv.gz", index=False, compression='gzip')
     print("[ COHORT SUCCESSFULLY SAVED ]")
 
     summary = "\n".join([

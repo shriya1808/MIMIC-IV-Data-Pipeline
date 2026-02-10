@@ -255,8 +255,8 @@ elif version=='Version 2':
     cohort_output = day_intervals_cohort_v2.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
 elif version=='Version 3':
     version_path="mimicv/3.1"
-    # cohort_output = "cohort_non-icu_readmission_30_"
-    cohort_output = day_intervals_cohort_v3.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
+    cohort_output = "cohort_non-icu_readmission_30_J44_J44"
+    # cohort_output = day_intervals_cohort_v3.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
 elif version=='Notes':
     version_path='mimiciv/notes'
     nlp_output = notes_preproc.extract_data(notes_sec, notes_pred)
