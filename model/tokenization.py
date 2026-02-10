@@ -65,14 +65,14 @@ class BEHRT_models():
         labs_list = []
         demo_list = []
         cond_list = []
-        labels =  pd.read_csv('./dataCAD/csv/'+'labels.csv')
+        labels =  pd.read_csv('./dataCKD/csv/'+'labels.csv')
         first = True
         #labels = labels.iloc[:1, :]
         print("STARTING READING FILES.")
         for hadm in tqdm.tqdm(labels.itertuples(), total = labels.shape[0]):
-            labs = pd.read_csv('./dataCAD/csv/' + str(hadm[1]) + '/dynamic.csv')
-            demo = pd.read_csv('./dataCAD/csv/' + str(hadm[1]) + '/demo.csv')
-            cond = pd.read_csv('./dataCAD/csv/' + str(hadm[1]) + '/static.csv')
+            labs = pd.read_csv('./dataCKD/csv/' + str(hadm[1]) + '/dynamic.csv')
+            demo = pd.read_csv('./dataCKD/csv/' + str(hadm[1]) + '/demo.csv')
+            cond = pd.read_csv('./dataCKD/csv/' + str(hadm[1]) + '/static.csv')
             if first:
                 condVocab_l = cond.iloc[0: , :].values.tolist()[0]
                 first = False
@@ -121,12 +121,12 @@ class BEHRT_models():
         ethVocab = {}
         insVocab = {}
         condVocab = {'token2idx': {}, 'idx2token': {0: 'PAD', 1: 'CLS', 2: 'SEP'}}
-        with open('./dataCAD/dict/ethVocab', 'rb') as fp:
+        with open('./dataCKD/dict/ethVocab', 'rb') as fp:
             ethVocab_l = pickle.load(fp)
             for i in range(len(ethVocab_l)):
                 ethVocab[ethVocab_l[i]] = i
 
-        with open('./dataCAD/dict/insVocab', 'rb') as fp:
+        with open('./dataCKD/dict/insVocab', 'rb') as fp:
             insVocab_l = pickle.load(fp)
             for i in range(len(insVocab_l)):
                 insVocab[insVocab_l[i]] = i

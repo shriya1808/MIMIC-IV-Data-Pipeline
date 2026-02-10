@@ -41,7 +41,7 @@ class ML_models():
         self.loss=evaluation.Loss('cpu',True,True,True,True,True,True,True,True,True,True,True)
         self.ml_train()
     def create_kfolds(self):
-        labels=pd.read_csv('./dataCAD/csv/labels.csv', header=0)
+        labels=pd.read_csv('./dataCKD/csv/labels.csv', header=0)
         
         if (self.k_fold==0):
             k_fold=5
@@ -79,7 +79,7 @@ class ML_models():
     def ml_train(self):
         k_hids=self.create_kfolds()
         
-        labels=pd.read_csv('./dataCAD/csv/labels.csv', header=0)
+        labels=pd.read_csv('./dataCKD/csv/labels.csv', header=0)
         for i in range(self.k_fold):
             print("==================={0:2d} FOLD=====================".format(i))
             test_hids=k_hids[i]
@@ -90,7 +90,7 @@ class ML_models():
             
             concat_cols=[]
             if(self.concat):
-                dyn=pd.read_csv('./dataCAD/csv/'+str(train_hids[0])+'/dynamic.csv',header=[0,1])
+                dyn=pd.read_csv('./dataCKD/csv/'+str(train_hids[0])+'/dynamic.csv',header=[0,1])
                 dyn.columns=dyn.columns.droplevel(0)
                 cols=dyn.columns
                 time=dyn.shape[0]
@@ -189,7 +189,7 @@ class ML_models():
                 y=labels[labels['hadm_id']==sample]['label']
             
             #print(sample)
-            dyn=pd.read_csv('./dataCAD/csv/'+str(sample)+'/dynamic.csv',header=[0,1])
+            dyn=pd.read_csv('./dataCKD/csv/'+str(sample)+'/dynamic.csv',header=[0,1])
             
             if self.concat:
                 dyn.columns=dyn.columns.droplevel(0)
@@ -233,11 +233,11 @@ class ML_models():
 #             print(dyn.shape)
 #             print(dyn_df.shape)
 #             print(dyn_df.head())
-            stat=pd.read_csv('./dataCAD/csv/'+str(sample)+'/static.csv',header=[0,1])
+            stat=pd.read_csv('./dataCKD/csv/'+str(sample)+'/static.csv',header=[0,1])
             stat=stat['COND']
 #             print(stat.shape)
 #             print(stat.head())
-            demo=pd.read_csv('./dataCAD/csv/'+str(sample)+'/demo.csv',header=0)
+            demo=pd.read_csv('./dataCKD/csv/'+str(sample)+'/demo.csv',header=0)
 #             print(demo.shape)
 #             print(demo.head())
             if X_df.empty:
@@ -266,7 +266,7 @@ class ML_models():
         output_df['age']=list(self.test_data['Age'])
         output_df['insurance']=list(self.test_data['insurance'])
         
-        with open('./dataCAD/output/'+'outputDict', 'wb') as fp:
+        with open('./dataCKD/output/'+'outputDict', 'wb') as fp:
                pickle.dump(output_df, fp)
         
     
@@ -281,13 +281,13 @@ class ML_models():
         output_df['age']=list(self.test_data['Age'])
         output_df['insurance']=list(self.test_data['insurance'])
         
-        with open('./dataCAD/output/'+'outputDict', 'wb') as fp:
+        with open('./dataCKD/output/'+'outputDict', 'wb') as fp:
                pickle.dump(output_df, fp)
         
         imp_df=pd.DataFrame()
         imp_df['imp']=importance
         imp_df['feature']=features
-        imp_df.to_csv('./dataCAD/output/'+'feature_importance.csv', index=False)
+        imp_df.to_csv('./dataCKD/output/'+'feature_importance.csv', index=False)
                 
                 
 
