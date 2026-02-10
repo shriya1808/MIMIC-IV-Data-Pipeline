@@ -89,7 +89,7 @@ def standardize_icd(mapping, df, root=False):
 def read_labevents_table(mimic4_path):
     labevents = dataframe_from_csv(os.path.join(mimic4_path, 'hosp/labevents.csv.gz'), chunksize=1000)
     labevents.reset_index(inplace=True)
-    return labevents[['subject_id', 'itemid', 'hadm_id', 'charttime', 'storetime', 'value', 'valueuom', 'flag']]
+    return labevents[['subject_id', 'itemid', 'hadm_id', 'charttime', 'storetime', 'value', 'valueuom', ]]
 
 
 def read_d_labitems_table(mimic4_path):
@@ -315,10 +315,10 @@ def preproc_labs(dataset_path: str, version_path:str, cohort_path:str, time_col:
         #print(chunk['hadm_id'].isna().sum())
         chunkna=chunk[chunk['hadm_id'].isna()]
         chunk=chunk[chunk['hadm_id'].notnull()]
-        chunkna = impute_hadm_ids(chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom','flag']].copy(), adm)
+        chunkna = impute_hadm_ids(chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom']].copy(), adm)
         del chunkna['hadm_id']
         chunkna=chunkna.rename(columns={'hadm_id_new':'hadm_id'})
-        chunkna=chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom','flag']]
+        chunkna=chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom']]
         # chunk=chunk.append(chunkna, ignore_index=True)
         chunk = pd.concat([chunk, chunkna], ignore_index=True)
 
