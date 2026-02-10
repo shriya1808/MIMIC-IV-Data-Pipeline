@@ -193,7 +193,7 @@ print(radio_input1)
 
 print("Please select if you want to perform choosen prediction task for a specific disease.")
 # radio_input3 = widgets.RadioButtons(options=['No Disease Filter','Heart Failure','CKD','CAD','COPD'],value='No Disease Filter')
-radio_input3 = 'Heart Failure'   ############1234567890
+radio_input3 = 'CKD'   ############1234567890
 print(radio_input3)
 
 
@@ -442,48 +442,48 @@ else:
 #############Feature Selection #################
 if data_icu:
     if diag_flag:
-        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/diag_features.csv)")
+        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./dataCKD/summary/diag_features.csv)")
         # radio_input4 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input4 = 'No'
         print(radio_input4)       
     if med_flag:
-        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/med_features.csv)")
+        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./dataCKD/summary/med_features.csv)")
         # radio_input5 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input5 = 'No'
         print(radio_input5)   
     if proc_flag:
-        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/proc_features.csv)")
+        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./dataCKD/summary/proc_features.csv)")
         # radio_input6 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input6 = 'No'
         print(radio_input6)   
     if out_flag:
-        print("Do you want to do Feature Selection for Output event \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/out_features.csv)")
+        print("Do you want to do Feature Selection for Output event \n (If yes, please edit list of codes in ./dataCKD/summary/out_features.csv)")
         # radio_input7 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input7 = 'No'
         print(radio_input7)  
     if chart_flag:
-        print("Do you want to do Feature Selection for Chart events \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/chart_features.csv)")
+        print("Do you want to do Feature Selection for Chart events \n (If yes, please edit list of codes in ./dataCKD/summary/chart_features.csv)")
         # radio_input8 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input8 = 'No'
         print(radio_input8)  
 else:
     if diag_flag:
-        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/diag_features.csv)")
+        print("Do you want to do Feature Selection for Diagnosis \n (If yes, please edit list of codes in ./dataCKD/summary/diag_features.csv)")
         # radio_input4 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input4
         print(radio_input4)         
     if med_flag:
-        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/med_features.csv)")
+        print("Do you want to do Feature Selection for Medication \n (If yes, please edit list of codes in ./dataCKD/summary/med_features.csv)")
         # radio_input5 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input5 = 'No'
         print(radio_input5)   
     if proc_flag:
-        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/proc_features.csv)")
+        print("Do you want to do Feature Selection for Procedures \n (If yes, please edit list of codes in ./dataCKD/summary/proc_features.csv)")
         # radio_input6 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input6 = 'No'
         print(radio_input6)   
     if lab_flag:
-        print("Do you want to do Feature Selection for Labs \n (If yes, please edit list of codes in ./dataHeart_Failure/summary/lab_features.csv)")
+        print("Do you want to do Feature Selection for Labs \n (If yes, please edit list of codes in ./dataCKD/summary/lab_features.csv)")
         # radio_input7 = widgets.RadioButtons(options=['Yes','No'],value='No')
         radio_input7 = 'No'
         print(radio_input7)   
