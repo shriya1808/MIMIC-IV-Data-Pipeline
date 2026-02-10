@@ -307,7 +307,7 @@ def preproc_labs(dataset_path: str, version_path:str, cohort_path:str, time_col:
         chunk = chunk[chunk['flag'].str.lower() == 'abnormal']
 
         # Drop flag column so output structure stays same
-        # chunk = chunk.drop(columns=['flag']) ######################################1234567890
+        chunk = chunk.drop(columns=['flag']) ######################################1234567890
 
         chunk['valueuom']=chunk['valueuom'].fillna(0)
         
