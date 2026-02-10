@@ -13,14 +13,14 @@ def generate_patient_features_csv(cohort_output_name):
     """
     
     # Define Paths
-    cohort_path = f"./dataCAD/cohort/{cohort_output_name}.csv.gz"
+    cohort_path = f"./dataCOPD/cohort/{cohort_output_name}.csv.gz"
     # cohort_path = f"./data/cohort/{cohort_output_name}.csv"
-    diag_path = "./dataCAD/features/preproc_diag.csv.gz"
-    proc_path = "./dataCAD/features/preproc_proc.csv.gz"
-    med_path = "./dataCAD/features/preproc_med.csv.gz"
-    lab_path = "./dataCAD/features/preproc_labs.csv.gz"
+    diag_path = "./dataCOPD/features/preproc_diag.csv.gz"
+    proc_path = "./dataCOPD/features/preproc_proc.csv.gz"
+    med_path = "./dataCOPD/features/preproc_med.csv.gz"
+    lab_path = "./dataCOPD/features/preproc_labs.csv.gz"
     
-    output_filename = "patient_features_CAD.csv"
+    output_filename = "patient_features_COPD.csv"
 
     # 1. Read Cohort Data (Base)
     print(f"[ READING COHORT ] {cohort_path}")

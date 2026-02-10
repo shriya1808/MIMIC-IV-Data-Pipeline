@@ -9,10 +9,10 @@ import os
 import sys
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + './../..')
-if not os.path.exists("./dataCAD/dict"):
-    os.makedirs("./dataCAD/dict")
-if not os.path.exists("./dataCAD/csv"):
-    os.makedirs("./dataCAD/csv")
+if not os.path.exists("./dataCOPD/dict"):
+    os.makedirs("./dataCOPD/dict")
+if not os.path.exists("./dataCOPD/csv"):
+    os.makedirs("./dataCOPD/csv")
     
 class Generator():
     def __init__(self,cohort_output,if_mort,if_admn,if_los,feat_cond,feat_proc,feat_out,feat_chart,feat_med,impute,include_time=24,bucket=1,predW=6):
@@ -56,7 +56,7 @@ class Generator():
             self.generate_meds()
 
     def generate_adm(self):
-        data=pd.read_csv(f"./dataCAD/cohort/{self.cohort_output}.csv.gz", compression='gzip', header=0, index_col=None)
+        data=pd.read_csv(f"./dataCOPD/cohort/{self.cohort_output}.csv.gz", compression='gzip', header=0, index_col=None)
         data['intime'] = pd.to_datetime(data['intime'])
         data['outtime'] = pd.to_datetime(data['outtime'])
         data['los']=pd.to_timedelta(data['outtime']-data['intime'],unit='h')
@@ -72,13 +72,13 @@ class Generator():
         return data
     
     def generate_cond(self):
-        cond=pd.read_csv("./dataCAD/features/preproc_diag_icu.csv.gz", compression='gzip', header=0, index_col=None)
+        cond=pd.read_csv("./dataCOPD/features/preproc_diag_icu.csv.gz", compression='gzip', header=0, index_col=None)
         cond=cond[cond['stay_id'].isin(self.data['stay_id'])]
         cond_per_adm = cond.groupby('stay_id').size().max()
         self.cond, self.cond_per_adm = cond, cond_per_adm
     
     def generate_proc(self):
-        proc=pd.read_csv("./dataCAD/features/preproc_proc_icu.csv.gz", compression='gzip', header=0, index_col=None)
+        proc=pd.read_csv("./dataCOPD/features/preproc_proc_icu.csv.gz", compression='gzip', header=0, index_col=None)
         proc=proc[proc['stay_id'].isin(self.data['stay_id'])]
         proc[['start_days', 'dummy','start_hours']] = proc['event_time_from_admit'].str.split(' ', -1, expand=True)
         proc[['start_hours','min','sec']] = proc['start_hours'].str.split(':', -1, expand=True)
@@ -95,7 +95,7 @@ class Generator():
         self.proc=proc
         
     def generate_out(self):
-        out=pd.read_csv("./dataCAD/features/preproc_out_icu.csv.gz", compression='gzip', header=0, index_col=None)
+        out=pd.read_csv("./dataCOPD/features/preproc_out_icu.csv.gz", compression='gzip', header=0, index_col=None)
         out=out[out['stay_id'].isin(self.data['stay_id'])]
         out[['start_days', 'dummy','start_hours']] = out['event_time_from_admit'].str.split(' ', -1, expand=True)
         out[['start_hours','min','sec']] = out['start_hours'].str.split(':', -1, expand=True)
@@ -115,7 +115,7 @@ class Generator():
     def generate_chart(self):
         chunksize = 5000000
         final=pd.DataFrame()
-        for chart in tqdm(pd.read_csv("./dataCAD/features/preproc_chart_icu.csv.gz", compression='gzip', header=0, index_col=None,chunksize=chunksize)):
+        for chart in tqdm(pd.read_csv("./dataCOPD/features/preproc_chart_icu.csv.gz", compression='gzip', header=0, index_col=None,chunksize=chunksize)):
             chart=chart[chart['stay_id'].isin(self.data['stay_id'])]
             chart[['start_days', 'dummy','start_hours']] = chart['event_time_from_admit'].str.split(' ', -1, expand=True)
             chart[['start_hours','min','sec']] = chart['start_hours'].str.split(':', -1, expand=True)
@@ -140,7 +140,7 @@ class Generator():
         
         
     def generate_meds(self):
-        meds=pd.read_csv("./dataCAD/features/preproc_med_icu.csv.gz", compression='gzip', header=0, index_col=None)
+        meds=pd.read_csv("./dataCOPD/features/preproc_med_icu.csv.gz", compression='gzip', header=0, index_col=None)
         meds[['start_days', 'dummy','start_hours']] = meds['start_hours_from_admit'].str.split(' ', -1, expand=True)
         meds[['start_hours','min','sec']] = meds['start_hours'].str.split(':', -1, expand=True)
         meds['start_time']=pd.to_numeric(meds['start_days'])*24+pd.to_numeric(meds['start_hours'])
@@ -421,20 +421,20 @@ class Generator():
             
                 
         ######SAVE DICTIONARIES##############
-        with open("./dataCAD/dict/metaDic", 'rb') as fp:
+        with open("./dataCOPD/dict/metaDic", 'rb') as fp:
             metaDic=pickle.load(fp)
         
-        with open("./dataCAD/dict/dataChartDic", 'wb') as fp:
+        with open("./dataCOPD/dict/dataChartDic", 'wb') as fp:
             pickle.dump(dataDic, fp)
 
       
-        with open("./dataCAD/dict/chartVocab", 'wb') as fp:
+        with open("./dataCOPD/dict/chartVocab", 'wb') as fp:
             pickle.dump(list(chart['itemid'].unique()), fp)
         self.chart_vocab = chart['itemid'].nunique()
         metaDic['Chart']=self.chart_per_adm
         
             
-        with open("./dataCAD/dict/metaDic", 'wb') as fp:
+        with open("./dataCOPD/dict/metaDic", 'wb') as fp:
             pickle.dump(metaDic, fp)
             
             
@@ -458,9 +458,9 @@ class Generator():
         for hid in tqdm(self.hids):
             grp=self.data[self.data['stay_id']==hid]
             demo_csv=grp[['Age','gender','ethnicity','insurance']]
-            if not os.path.exists("./dataCAD/csv/"+str(hid)):
-                os.makedirs("./dataCAD/csv/"+str(hid))
-            demo_csv.to_csv('./dataCAD/csv/'+str(hid)+'/demo.csv',index=False)
+            if not os.path.exists("./dataCOPD/csv/"+str(hid)):
+                os.makedirs("./dataCOPD/csv/"+str(hid))
+            demo_csv.to_csv('./dataCOPD/csv/'+str(hid)+'/demo.csv',index=False)
             
             dyn_csv=pd.DataFrame()
             ###MEDS
@@ -649,7 +649,7 @@ class Generator():
                     dyn_csv=pd.concat([dyn_csv,val],axis=1)
             
             #Save temporal data to csv
-            dyn_csv.to_csv('./dataCAD/csv/'+str(hid)+'/dynamic.csv',index=False)
+            dyn_csv.to_csv('./dataCOPD/csv/'+str(hid)+'/dynamic.csv',index=False)
             
             ##########COND#########
             if(self.feat_cond):
@@ -670,62 +670,62 @@ class Generator():
                     grp=grp.fillna(0)
                     grp=grp[feat]
                     grp.columns=pd.MultiIndex.from_product([["COND"], grp.columns])
-            grp.to_csv('./dataCAD/csv/'+str(hid)+'/static.csv',index=False)   
-            labels_csv.to_csv('./dataCAD/csv/labels.csv',index=False)    
+            grp.to_csv('./dataCOPD/csv/'+str(hid)+'/static.csv',index=False)   
+            labels_csv.to_csv('./dataCOPD/csv/labels.csv',index=False)    
             
                 
         ######SAVE DICTIONARIES##############
         metaDic={'Cond':{},'Proc':{},'Med':{},'Out':{},'Chart':{},'LOS':{}}
         metaDic['LOS']=los
-        with open("./dataCAD/dict/dataDic", 'wb') as fp:
+        with open("./dataCOPD/dict/dataDic", 'wb') as fp:
             pickle.dump(dataDic, fp)
 
-        with open("./dataCAD/dict/hadmDic", 'wb') as fp:
+        with open("./dataCOPD/dict/hadmDic", 'wb') as fp:
             pickle.dump(self.hids, fp)
         
-        with open("./dataCAD/dict/ethVocab", 'wb') as fp:
+        with open("./dataCOPD/dict/ethVocab", 'wb') as fp:
             pickle.dump(list(self.data['ethnicity'].unique()), fp)
             self.eth_vocab = self.data['ethnicity'].nunique()
             
-        with open("./dataCAD/dict/ageVocab", 'wb') as fp:
+        with open("./dataCOPD/dict/ageVocab", 'wb') as fp:
             pickle.dump(list(self.data['Age'].unique()), fp)
             self.age_vocab = self.data['Age'].nunique()
             
-        with open("./dataCAD/dict/insVocab", 'wb') as fp:
+        with open("./dataCOPD/dict/insVocab", 'wb') as fp:
             pickle.dump(list(self.data['insurance'].unique()), fp)
             self.ins_vocab = self.data['insurance'].nunique()
             
         if(self.feat_med):
-            with open("./dataCAD/dict/medVocab", 'wb') as fp:
+            with open("./dataCOPD/dict/medVocab", 'wb') as fp:
                 pickle.dump(list(meds['itemid'].unique()), fp)
             self.med_vocab = meds['itemid'].nunique()
             metaDic['Med']=self.med_per_adm
             
         if(self.feat_out):
-            with open("./dataCAD/dict/outVocab", 'wb') as fp:
+            with open("./dataCOPD/dict/outVocab", 'wb') as fp:
                 pickle.dump(list(out['itemid'].unique()), fp)
             self.out_vocab = out['itemid'].nunique()
             metaDic['Out']=self.out_per_adm
             
         if(self.feat_chart):
-            with open("./dataCAD/dict/chartVocab", 'wb') as fp:
+            with open("./dataCOPD/dict/chartVocab", 'wb') as fp:
                 pickle.dump(list(chart['itemid'].unique()), fp)
             self.chart_vocab = chart['itemid'].nunique()
             metaDic['Chart']=self.chart_per_adm
         
         if(self.feat_cond):
-            with open("./dataCAD/dict/condVocab", 'wb') as fp:
+            with open("./dataCOPD/dict/condVocab", 'wb') as fp:
                 pickle.dump(list(self.cond['new_icd_code'].unique()), fp)
             self.cond_vocab = self.cond['new_icd_code'].nunique()
             metaDic['Cond']=self.cond_per_adm
         
         if(self.feat_proc):    
-            with open("./dataCAD/dict/procVocab", 'wb') as fp:
+            with open("./dataCOPD/dict/procVocab", 'wb') as fp:
                 pickle.dump(list(proc['itemid'].unique()), fp)
             self.proc_vocab = proc['itemid'].nunique()
             metaDic['Proc']=self.proc_per_adm
             
-        with open("./dataCAD/dict/metaDic", 'wb') as fp:
+        with open("./dataCOPD/dict/metaDic", 'wb') as fp:
             pickle.dump(metaDic, fp)
             
             
