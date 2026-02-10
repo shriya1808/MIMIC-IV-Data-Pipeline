@@ -7,18 +7,18 @@ def generate_patient_features_csv(cohort_output_name):
     Generates a CSV file with patient features (demographics + aggregated clinical codes)
     
     Args:
-        cohort_output_name (str): The name of your cohort file inside ./dataHeart_Failure/cohort/ 
+        cohort_output_name (str): The name of your cohort file inside ./dataCAD/cohort/ 
                                   (without .csv.gz extension). 
                                   Example: "cohort_non-icu_readmission_30_no_disease_filter"
     """
     
     # Define Paths
-    cohort_path = f"./dataHeart_Failure/cohort/{cohort_output_name}.csv.gz"
-    # cohort_path = f"./dataHeart_Failure/cohort/{cohort_output_name}.csv"
-    diag_path = "./dataHeart_Failure/features/preproc_diag.csv.gz"
-    proc_path = "./dataHeart_Failure/features/preproc_proc.csv.gz"
-    med_path = "./dataHeart_Failure/features/preproc_med.csv.gz"
-    lab_path = "./dataHeart_Failure/features/preproc_labs.csv.gz"
+    cohort_path = f"./dataCAD/cohort/{cohort_output_name}.csv.gz"
+    # cohort_path = f"./dataCAD/cohort/{cohort_output_name}.csv"
+    diag_path = "./dataCAD/features/preproc_diag.csv.gz"
+    proc_path = "./dataCAD/features/preproc_proc.csv.gz"
+    med_path = "./dataCAD/features/preproc_med.csv.gz"
+    lab_path = "./dataCAD/features/preproc_labs.csv.gz"
     
     output_filename = "patient_features_COPD.csv"
 
@@ -130,7 +130,7 @@ def generate_patient_features_csv(cohort_output_name):
 # EXECUTION
 # ==========================================
 if __name__ == "__main__":
-    # REPLACE THIS with the actual name of your cohort file found in ./dataHeart_Failure/cohort/
+    # REPLACE THIS with the actual name of your cohort file found in ./dataCAD/cohort/
     # Do not include the .csv.gz extension.
     # Example: "cohort_non-icu_readmission_30_no_disease_filter"
     pwd = os.getcwd()

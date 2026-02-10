@@ -13,12 +13,12 @@ import os
 import sys
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + './../..')
-if not os.path.exists("./dataHeart_Failure/output"):
-    os.makedirs("./dataHeart_Failure/output")
+if not os.path.exists("./dataCAD/output"):
+    os.makedirs("./dataCAD/output")
 
 def fairness_evaluation(inputFile, outputFile):
-    if os.path.isfile('./dataHeart_Failure/output/'+inputFile):
-        output_dict = pickle.load(open('./dataHeart_Failure/output/'+inputFile,"rb"))
+    if os.path.isfile('./dataCAD/output/'+inputFile):
+        output_dict = pickle.load(open('./dataCAD/output/'+inputFile,"rb"))
     else:
         print("fairnessDict file not found.")
 
@@ -93,5 +93,5 @@ def fairness_evaluation(inputFile, outputFile):
     except ImportError:
         display(report)
 
-    report.to_csv('./dataHeart_Failure/output/'+outputFile+'.csv',index=False)
+    report.to_csv('./dataCAD/output/'+outputFile+'.csv',index=False)
 

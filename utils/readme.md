@@ -2,7 +2,7 @@
 
 - **hosp_preprocess_util.py** and **icu_preprocess_util.py**
   These files are used to read original feature csv files downloaded from MIMIC-IV and clean (removing NAs, removing duplicates, etc) and
-  save feature files for the selected cohort in ./dataHeart_Failure/features folder.
+  save feature files for the selected cohort in ./dataCAD/features folder.
   These files are run from **Block 2** in **mainPipeline.ipynb**
   
 - **outlier_removal.py**

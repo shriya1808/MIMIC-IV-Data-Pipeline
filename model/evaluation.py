@@ -14,8 +14,8 @@ import sys
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + './../..')
 
-if not os.path.exists("./dataHeart_Failure/output"):
-    os.makedirs("./dataHeart_Failure/output")
+if not os.path.exists("./dataCAD/output"):
+    os.makedirs("./dataCAD/output")
     
 class Loss(nn.Module):
     def __init__(self,device,acc,ppv,sensi,tnr,npv,auroc,aurocPlot,auprc,auprcPlot,callb,callbPlot):
@@ -178,7 +178,7 @@ class Loss(nn.Module):
         plt.xlabel("False Positive Rate")
         plt.title("AUC-ROC")
         plt.legend()
-        plt.savefig('./dataHeart_Failure/output/'+"auroc_plot.png")
+        plt.savefig('./dataCAD/output/'+"auroc_plot.png")
         #plt.show()
         
     def calb_curve(self,bins,bin_accs,ECE, MCE):
@@ -213,7 +213,7 @@ class Loss(nn.Module):
         ECE_patch = mpatches.Patch(color='green', label='ECE = {:.2f}%'.format(ECE*100))
         MCE_patch = mpatches.Patch(color='red', label='MCE = {:.2f}%'.format(MCE*100))
         plt.legend(handles=[ECE_patch, MCE_patch])
-        plt.savefig('./dataHeart_Failure/output/'+"callibration_plot.png")
+        plt.savefig('./dataCAD/output/'+"callibration_plot.png")
         #plt.show()
         
     def calb_bins(self,preds,labels):
