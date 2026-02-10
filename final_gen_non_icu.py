@@ -13,12 +13,12 @@ def generate_patient_features_csv(cohort_output_name):
     """
     
     # Define Paths
-    cohort_path = f"./data2/cohort/{cohort_output_name}.csv.gz"
+    cohort_path = f"./dataHeart_Failure/cohort/{cohort_output_name}.csv.gz"
     # cohort_path = f"./data/cohort/{cohort_output_name}.csv"
-    diag_path = "./data2/features/preproc_diag.csv.gz"
-    proc_path = "./data2/features/preproc_proc.csv.gz"
-    med_path = "./data2/features/preproc_med.csv.gz"
-    lab_path = "./data2/features/preproc_labs.csv.gz"
+    diag_path = "./dataHeart_Failure/features/preproc_diag.csv.gz"
+    proc_path = "./dataHeart_Failure/features/preproc_proc.csv.gz"
+    med_path = "./dataHeart_Failure/features/preproc_med.csv.gz"
+    lab_path = "./dataHeart_Failure/features/preproc_labs.csv.gz"
     
     output_filename = "patient_features.csv"
 

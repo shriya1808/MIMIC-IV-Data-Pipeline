@@ -307,7 +307,7 @@ def preproc_labs(dataset_path: str, version_path:str, cohort_path:str, time_col:
         chunk = chunk[chunk['flag'].str.lower() == 'abnormal']
 
         # Drop flag column so output structure stays same
-        chunk = chunk.drop(columns=['flag'])
+        # chunk = chunk.drop(columns=['flag']) ######################################1234567890
 
         chunk['valueuom']=chunk['valueuom'].fillna(0)
         
@@ -315,10 +315,10 @@ def preproc_labs(dataset_path: str, version_path:str, cohort_path:str, time_col:
         #print(chunk['hadm_id'].isna().sum())
         chunkna=chunk[chunk['hadm_id'].isna()]
         chunk=chunk[chunk['hadm_id'].notnull()]
-        chunkna = impute_hadm_ids(chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom']].copy(), adm)
+        chunkna = impute_hadm_ids(chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom','flag']].copy(), adm)
         del chunkna['hadm_id']
         chunkna=chunkna.rename(columns={'hadm_id_new':'hadm_id'})
-        chunkna=chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom']]
+        chunkna=chunkna[['subject_id','hadm_id','itemid','charttime','valuenum','valueuom','flag']]
         # chunk=chunk.append(chunkna, ignore_index=True)
         chunk = pd.concat([chunk, chunkna], ignore_index=True)
 
