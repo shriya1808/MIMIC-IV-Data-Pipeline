@@ -267,9 +267,9 @@ def extract_data(use_ICU:str, label:str, time:int, icd_code:str, root_dir, disea
     label: Can either be '{day} day Readmission' or 'Mortality', decides what binary data label signifies"""
     print("===========MIMIC-IV v3.0============")
     if not cohort_output:
-        cohort_output="cohort_" + use_ICU.lower() + "_" + label.lower().replace(" ", "_") + "_" + str(time) + "_" + disease_label
+        cohort_output="cohort_" + use_ICU.lower() + "_" + label.lower().replace(" ", "_") + "_" + str(time) + "_" + icd_code
     if not summary_output:
-        summary_output="summary_" + use_ICU.lower() + "_" + label.lower().replace(" ", "_")  + "_" + str(time) + "_" + disease_label
+        summary_output="summary_" + use_ICU.lower() + "_" + label.lower().replace(" ", "_")  + "_" + str(time) + "_" + icd_code
     
     if icd_code=="No Disease Filter":
         if len(disease_label):

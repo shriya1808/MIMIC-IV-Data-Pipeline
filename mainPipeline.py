@@ -193,7 +193,7 @@ print(radio_input1)
 
 print("Please select if you want to perform choosen prediction task for a specific disease.")
 # radio_input3 = widgets.RadioButtons(options=['No Disease Filter','Heart Failure','CKD','CAD','COPD'],value='No Disease Filter')
-radio_input3 = 'No Disease Filter'
+radio_input3 = 'Heart Failure'   ############1234567890
 print(radio_input3)
 
 
