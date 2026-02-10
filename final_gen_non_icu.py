@@ -20,7 +20,7 @@ def generate_patient_features_csv(cohort_output_name):
     med_path = "./dataCKD/features/preproc_med.csv.gz"
     lab_path = "./dataCKD/features/preproc_labs.csv.gz"
     
-    output_filename = "patient_features_COPD.csv"
+    output_filename = "patient_features_CKD.csv"
 
     # 1. Read Cohort Data (Base)
     print(f"[ READING COHORT ] {cohort_path}")
