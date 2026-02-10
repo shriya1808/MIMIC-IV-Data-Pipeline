@@ -8,8 +8,8 @@ import os
 import sys
 from pathlib import Path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + './../..')
-if not os.path.exists("./dataHeart_Failure/dict"):
-    os.makedirs("./dataHeart_Failure/dict")
+if not os.path.exists("./dataCKD/dict"):
+    os.makedirs("./dataCKD/dict")
     
 class Generator():
     def __init__(self,cohort_output,if_mort,if_admn,if_los,feat_cond,feat_lab,feat_proc,feat_med,impute,include_time=24,bucket=1,predW=0):
@@ -57,7 +57,7 @@ class Generator():
         
             
     def generate_adm(self):
-        data=pd.read_csv(f"./dataHeart_Failure/cohort/{self.cohort_output}.csv.gz", compression='gzip', header=0, index_col=None)
+        data=pd.read_csv(f"./dataCKD/cohort/{self.cohort_output}.csv.gz", compression='gzip', header=0, index_col=None)
         data['admittime'] = pd.to_datetime(data['admittime'])
         data['dischtime'] = pd.to_datetime(data['dischtime'])
         data['los']=pd.to_timedelta(data['dischtime']-data['admittime'],unit='h')
@@ -71,13 +71,13 @@ class Generator():
         return data
     
     def generate_cond(self):
-        cond=pd.read_csv("./dataHeart_Failure/features/preproc_diag.csv.gz", compression='gzip', header=0, index_col=None)
+        cond=pd.read_csv("./dataCKD/features/preproc_diag.csv.gz", compression='gzip', header=0, index_col=None)
         cond=cond[cond['hadm_id'].isin(self.data['hadm_id'])]
         cond_per_adm = cond.groupby('hadm_id').size().max()
         self.cond, self.cond_per_adm = cond, cond_per_adm
     
     def generate_proc(self):
-        proc=pd.read_csv("./dataHeart_Failure/features/preproc_proc.csv.gz", compression='gzip', header=0, index_col=None)
+        proc=pd.read_csv("./dataCKD/features/preproc_proc.csv.gz", compression='gzip', header=0, index_col=None)
         proc=proc[proc['hadm_id'].isin(self.data['hadm_id'])]
         proc[['start_days', 'dummy','start_hours']] = proc['proc_time_from_admit'].str.split(' ', n=-1, expand=True)
         proc[['start_hours','min','sec']] = proc['start_hours'].str.split(':', n=-1, expand=True)
@@ -96,7 +96,7 @@ class Generator():
     def generate_labs(self):
         chunksize = 10000000
         final=pd.DataFrame()
-        for labs in tqdm(pd.read_csv("./dataHeart_Failure/features/preproc_labs.csv.gz", compression='gzip', header=0, index_col=None,chunksize=chunksize)):
+        for labs in tqdm(pd.read_csv("./dataCKD/features/preproc_labs.csv.gz", compression='gzip', header=0, index_col=None,chunksize=chunksize)):
             labs=labs[labs['hadm_id'].isin(self.data['hadm_id'])]
             labs[['start_days', 'dummy','start_hours']] = labs['lab_time_from_admit'].str.split(' ', n=-1, expand=True)
             labs[['start_hours','min','sec']] = labs['start_hours'].str.split(':', n=-1, expand=True)
@@ -120,7 +120,7 @@ class Generator():
         self.labs=final
         
     def generate_meds(self):
-        meds=pd.read_csv("./dataHeart_Failure/features/preproc_med.csv.gz", compression='gzip', header=0, index_col=None)
+        meds=pd.read_csv("./dataCKD/features/preproc_med.csv.gz", compression='gzip', header=0, index_col=None)
         meds[['start_days', 'dummy','start_hours']] = meds['start_hours_from_admit'].str.split(' ', n=-1, expand=True)
         meds[['start_hours','min','sec']] = meds['start_hours'].str.split(':', n=-1, expand=True)
         meds['start_time']=pd.to_numeric(meds['start_days'])*24+pd.to_numeric(meds['start_hours'])
@@ -334,9 +334,9 @@ class Generator():
         for hid in tqdm(self.hids):
             grp=self.data[self.data['hadm_id']==hid]
             demo_csv=grp[['Age','gender','ethnicity','insurance']]
-            if not os.path.exists("./dataHeart_Failure/csv/"+str(hid)):
-                os.makedirs("./dataHeart_Failure/csv/"+str(hid))
-            demo_csv.to_csv('./dataHeart_Failure/csv/'+str(hid)+'/demo.csv',index=False)
+            if not os.path.exists("./dataCKD/csv/"+str(hid)):
+                os.makedirs("./dataCKD/csv/"+str(hid))
+            demo_csv.to_csv('./dataCKD/csv/'+str(hid)+'/demo.csv',index=False)
             
             dyn_csv=pd.DataFrame()
             ###MEDS
@@ -480,7 +480,7 @@ class Generator():
                     dyn_csv=pd.concat([dyn_csv,val],axis=1)
             
             #Save temporal data to csv
-            dyn_csv.to_csv('./dataHeart_Failure/csv/'+str(hid)+'/dynamic.csv',index=False)
+            dyn_csv.to_csv('./dataCKD/csv/'+str(hid)+'/dynamic.csv',index=False)
             
             ##########COND#########
             if(self.feat_cond):
@@ -501,56 +501,56 @@ class Generator():
                     grp=grp.fillna(0)
                     grp=grp[feat]
                     grp.columns=pd.MultiIndex.from_product([["COND"], grp.columns])
-            grp.to_csv('./dataHeart_Failure/csv/'+str(hid)+'/static.csv',index=False)   
-            labels_csv.to_csv('./dataHeart_Failure/csv/labels.csv',index=False)    
+            grp.to_csv('./dataCKD/csv/'+str(hid)+'/static.csv',index=False)   
+            labels_csv.to_csv('./dataCKD/csv/labels.csv',index=False)    
                 
                 
         ######SAVE DICTIONARIES##############
         metaDic={'Cond':{},'Proc':{},'Med':{},'Lab':{},'LOS':{}}
         metaDic['LOS']=los
-        with open("./dataHeart_Failure/dict/dataDic", 'wb') as fp:
+        with open("./dataCKD/dict/dataDic", 'wb') as fp:
             pickle.dump(dataDic, fp)
 
-        with open("./dataHeart_Failure/dict/hadmDic", 'wb') as fp:
+        with open("./dataCKD/dict/hadmDic", 'wb') as fp:
             pickle.dump(self.hids, fp)
         
-        with open("./dataHeart_Failure/dict/ethVocab", 'wb') as fp:
+        with open("./dataCKD/dict/ethVocab", 'wb') as fp:
             pickle.dump(list(self.data['ethnicity'].unique()), fp)
             self.eth_vocab = self.data['ethnicity'].nunique()
             
-        with open("./dataHeart_Failure/dict/ageVocab", 'wb') as fp:
+        with open("./dataCKD/dict/ageVocab", 'wb') as fp:
             pickle.dump(list(self.data['Age'].unique()), fp)
             self.age_vocab = self.data['Age'].nunique()
             
-        with open("./dataHeart_Failure/dict/insVocab", 'wb') as fp:
+        with open("./dataCKD/dict/insVocab", 'wb') as fp:
             pickle.dump(list(self.data['insurance'].unique()), fp)
             self.ins_vocab = self.data['insurance'].nunique()
             
         if(self.feat_med):
-            with open("./dataHeart_Failure/dict/medVocab", 'wb') as fp:
+            with open("./dataCKD/dict/medVocab", 'wb') as fp:
                 pickle.dump(list(meds['drug_name'].unique()), fp)
             self.med_vocab = meds['drug_name'].nunique()
             metaDic['Med']=self.med_per_adm
         
         if(self.feat_cond):
-            with open("./dataHeart_Failure/dict/condVocab", 'wb') as fp:
+            with open("./dataCKD/dict/condVocab", 'wb') as fp:
                 pickle.dump(list(self.cond['new_icd_code'].unique()), fp)
             self.cond_vocab = self.cond['new_icd_code'].nunique()
             metaDic['Cond']=self.cond_per_adm
         
         if(self.feat_proc):    
-            with open("./dataHeart_Failure/dict/procVocab", 'wb') as fp:
+            with open("./dataCKD/dict/procVocab", 'wb') as fp:
                 pickle.dump(list(proc['icd_code'].unique()), fp)
             self.proc_vocab = proc['icd_code'].unique()
             metaDic['Proc']=self.proc_per_adm
             
         if(self.feat_lab):    
-            with open("./dataHeart_Failure/dict/labsVocab", 'wb') as fp:
+            with open("./dataCKD/dict/labsVocab", 'wb') as fp:
                 pickle.dump(list(labs['itemid'].unique()), fp)
             self.lab_vocab = labs['itemid'].unique()
             metaDic['Lab']=self.labs_per_adm
             
-        with open("./dataHeart_Failure/dict/metaDic", 'wb') as fp:
+        with open("./dataCKD/dict/metaDic", 'wb') as fp:
             pickle.dump(metaDic, fp)
             
 

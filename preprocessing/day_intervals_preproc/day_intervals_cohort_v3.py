@@ -10,8 +10,8 @@ import disease_cohort
 importlib.reload(disease_cohort)
 import disease_cohort
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + './../..')
-if not os.path.exists("./dataHeart_Failure/cohort"):
-    os.makedirs("./dataHeart_Failure/cohort")
+if not os.path.exists("./dataCKD/cohort"):
+    os.makedirs("./dataCKD/cohort")
     
 def get_visit_pts(mimic4_path:str, group_col:str, visit_col:str, admit_col:str, disch_col:str, adm_visit_col:str, use_mort:bool, use_los:bool, los:int, use_admn:bool, disease_label:str,use_ICU:bool):
     """Combines the MIMIC-IV core/patients table information with either the icu/icustays or core/admissions data.
@@ -358,7 +358,7 @@ def extract_data(use_ICU:str, label:str, time:int, icd_code:str, root_dir, disea
     #print(cohort[cols].head())
     # save output
     cohort=cohort.rename(columns={"race":"ethnicity"})
-    cohort[cols].to_csv(root_dir+"/dataHeart_Failure/cohort/"+cohort_output+".csv.gz", index=False, compression='gzip')
+    cohort[cols].to_csv(root_dir+"/dataCKD/cohort/"+cohort_output+".csv.gz", index=False, compression='gzip')
     print("[ COHORT SUCCESSFULLY SAVED ]")
 
     summary = "\n".join([
@@ -370,7 +370,7 @@ def extract_data(use_ICU:str, label:str, time:int, icd_code:str, root_dir, disea
     ])
 
     # save basic summary of data
-    with open(f"./dataHeart_Failure/cohort/{summary_output}.txt", "w") as f:
+    with open(f"./dataCKD/cohort/{summary_output}.txt", "w") as f:
         f.write(summary)
 
     print("[ SUMMARY SUCCESSFULLY SAVED ]")

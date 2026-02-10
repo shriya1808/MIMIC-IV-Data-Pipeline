@@ -92,7 +92,7 @@ class DL_models():
         
         
     def create_kfolds(self):
-        labels=pd.read_csv('./dataHeart_Failure/csv/labels.csv', header=0)
+        labels=pd.read_csv('./dataCKD/csv/labels.csv', header=0)
         
         if (self.k_fold==0):
             k_fold=5
@@ -130,7 +130,7 @@ class DL_models():
     def dl_train(self):
         k_hids=self.create_kfolds()
         
-        labels=pd.read_csv('./dataHeart_Failure/csv/labels.csv', header=0)
+        labels=pd.read_csv('./dataCKD/csv/labels.csv', header=0)
         for i in range(self.k_fold):
             self.create_model(self.model_type)
             print("[ MODEL CREATED ]")
@@ -195,7 +195,7 @@ class DL_models():
             
     def model_val(self,val_hids):
         print("======= VALIDATION ========")
-        labels=pd.read_csv('./dataHeart_Failure/csv/labels.csv', header=0)
+        labels=pd.read_csv('./dataCKD/csv/labels.csv', header=0)
         
         val_prob=[]
         val_truth=[]
@@ -232,7 +232,7 @@ class DL_models():
     def model_test(self,test_hids):
         
         print("======= TESTING ========")
-        labels=pd.read_csv('./dataHeart_Failure/csv/labels.csv', header=0)
+        labels=pd.read_csv('./dataCKD/csv/labels.csv', header=0)
         
         self.prob=[]
         self.eth=[]
@@ -295,7 +295,7 @@ class DL_models():
         demo_df=torch.zeros(size=(1,0))
         y_df=[]
         #print(ids)
-        dyn=pd.read_csv('./dataHeart_Failure/csv/'+str(ids[0])+'/dynamic.csv',header=[0,1])
+        dyn=pd.read_csv('./dataCKD/csv/'+str(ids[0])+'/dynamic.csv',header=[0,1])
         keys=dyn.columns.levels[0]
 #         print("keys",keys)
         for i in range(len(keys)):
@@ -309,7 +309,7 @@ class DL_models():
             y_df.append(int(y))
 #             print(sample)
 #             print("y_df",y_df)
-            dyn=pd.read_csv('./dataHeart_Failure/csv/'+str(sample)+'/dynamic.csv',header=[0,1])
+            dyn=pd.read_csv('./dataCKD/csv/'+str(sample)+'/dynamic.csv',header=[0,1])
             #print(dyn)
             for key in range(len(keys)):
 #                 print("key",key)
@@ -330,7 +330,7 @@ class DL_models():
             
 #                 print(dyn_df[key].shape)        
             
-            stat=pd.read_csv('./dataHeart_Failure/csv/'+str(sample)+'/static.csv',header=[0,1])
+            stat=pd.read_csv('./dataCKD/csv/'+str(sample)+'/static.csv',header=[0,1])
             stat=stat['COND']
             stat=stat.to_numpy()
             stat=torch.tensor(stat)
@@ -342,7 +342,7 @@ class DL_models():
             else:
                 stat_df=stat
 #             print(stat_df)    
-            demo=pd.read_csv('./dataHeart_Failure/csv/'+str(sample)+'/demo.csv',header=0)
+            demo=pd.read_csv('./dataCKD/csv/'+str(sample)+'/demo.csv',header=0)
             #print(demo["gender"])
             demo["gender"].replace(self.gender_vocab, inplace=True)
             #print(demo["gender"])
@@ -497,6 +497,6 @@ class DL_models():
         output_df['age']=self.age
         output_df['insurance']=self.ins
         
-        with open('./dataHeart_Failure/output/'+'outputDict', 'wb') as fp:
+        with open('./dataCKD/output/'+'outputDict', 'wb') as fp:
                pickle.dump(output_df, fp)
 
