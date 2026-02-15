@@ -30,6 +30,7 @@ if not os.path.exists("./dataHeart_Failure/features/chartevents"):
     os.makedirs("./dataHeart_Failure/features/chartevents")
 
 def feature_icu(cohort_output, version_path, diag_flag=True,out_flag=True,chart_flag=True,proc_flag=True,med_flag=True):
+    version_path="mimiciv/3.0"
     if diag_flag:
         print("[EXTRACTING DIAGNOSIS DATA]")
         diag = preproc_icd_module("./"+version_path+"/hosp/diagnoses_icd.csv.gz", './dataHeart_Failure/cohort/'+cohort_output+'.csv.gz', './utils/mappings/ICD9_to_ICD10_mapping.txt', map_code_colname='diagnosis_code')
