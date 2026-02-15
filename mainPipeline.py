@@ -188,7 +188,7 @@ elif radio_input4=='Mortality':
 print("Extract Data")
 print("Please select below if you want to work with ICU or Non-ICU data ?")
 # radio_input1 = widgets.RadioButtons(options=['ICU', 'Non-ICU'],value='Non-ICU')
-radio_input1 = 'Non-ICU'
+radio_input1 = 'ICU'
 print(radio_input1)
 
 print("Please select if you want to perform choosen prediction task for a specific disease.")
@@ -254,9 +254,9 @@ elif version=='Version 2':
     version_path="mimiciv/2.0"
     cohort_output = day_intervals_cohort_v2.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
 elif version=='Version 3':
-    version_path="mimiciv/3.0"
-    cohort_output = "cohort_non-icu_readmission_30_I50_I50"  #####1234
-    # cohort_output = day_intervals_cohort_v3.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
+    version_path="mimicv/3.0"
+    # cohort_output = "cohort_non-icu_readmission_30_I50_I50"  #####1234
+    cohort_output = day_intervals_cohort_v3.extract_data(radio_input1,label,time,icd_code, root_dir,disease_label)
 elif version=='Notes':
     version_path='mimiciv/notes'
     nlp_output = notes_preproc.extract_data(notes_sec, notes_pred)
