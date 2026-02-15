@@ -1,9 +1,9 @@
 #!/bin/bash -l
 #
 #SBATCH --ntasks=1
-#SBATCH --time=04:00:00
+#SBATCH --time=24:00:00
 #SBATCH --export=NONE
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 
 #SBATCH --mail-user=shriya.mittapalli@fau.de
 #SBATCH --mail-type=ALL
