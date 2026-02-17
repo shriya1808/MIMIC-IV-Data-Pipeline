@@ -133,6 +133,9 @@ import evaluation
 
 import final_gen_non_icu
 from final_gen_non_icu import generate_patient_features_csv
+
+import final_gen_icu
+from final_gen_icu import generate_icu_patient_features_csv
 print("Finished importing.")
 
 
@@ -576,8 +579,10 @@ else:
 
 
 
-
-generate_patient_features_csv(cohort_output, root_dir)
+if data_icu:
+    generate_icu_patient_features_csv(cohort_output, root_dir)
+else:
+    generate_patient_features_csv(cohort_output, root_dir)
 
 
 
